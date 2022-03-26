@@ -25,11 +25,11 @@ void showShipsTable (int x,int y, int playTable[x][y]) {
          switch (playTable[i][j]) {
            case 0 : printf("|__|");
            break;
-           case 1 : printf("|bT|");
+           case 1 : printf("|SS|");
            break;
-           case 2 : printf("|XX|");
+           case 2 : printf("|MM|");
            break;
-           case 3 : printf("|ha|");
+           case 3 : printf("|LL|");
            break;
          }
       }
@@ -53,9 +53,11 @@ void showShipsTableOnlyHits (int x,int y, int playTable[x][y]) {
            break;
            case 1 : printf("|__|");
            break;
-           case 2 : printf("|XX|");
+           case 2 : printf("|__|");
            break;
-           case 3 : printf("|ha|");
+           case 3 : printf("|__|");
+           break;
+           case -1 : printf("|.C|");
            break;
          }
       }
@@ -97,6 +99,15 @@ void showBlankTable(int x,int y) {
 void fireAtShips(int row, int column) {
 
 }
+
+int place3Boat(int threeBoat) {
+
+}
+
+// int place3Boat(intx, int y, int changeRow, int changeColumn, int playTable){
+//
+//   playTable[changeRow - 1][changeColumn - 1] = 3;
+// }
 
 // void showShipsTable (int x,int y, int playTable[x][y]) {
 //   x++;
