@@ -57,7 +57,17 @@ void showShipsTableOnlyHits (int x,int y, int playTable[x][y]) {
            break;
            case 3 : printf("|__|");
            break;
-           case -1 : printf("|.C|");
+           // case -1 : printf("|.T|");
+           // break;
+           case -2 : printf("|.T|");
+           break;
+           case -3 : printf("|.T|");
+           break;
+           case -51 : printf("|.C|");
+           break;
+           case -52 : printf("|.C|");
+           break;
+           case -53 : printf("|.C|");
            break;
          }
       }

@@ -210,14 +210,49 @@ int main(int argc, char **argv) {
     system("clear");
     // printf("\n This is the turn %d you are modifying it \n", turnCounter);
     // printf("\n Player 1 : %d  Players 2 : %d  Player 3 : %d \n", playerScores[1], playerScores[2], playerScores[3]);
+
     if (playTable[changeRow - 1][changeColumn - 1] == 0)
     printf("\nYou couldn't hit the broad side of a moisture evaporator\n");
-    if (playTable[changeRow - 1][changeColumn - 1] == -1){
+    if (playTable[changeRow - 1][changeColumn - 1] < 0) {
       printf("\nThis was already shot, you lost your turn\n");
     }
-    if (playTable[changeRow - 1][changeColumn - 1] > 0){
+    if (playTable[changeRow - 1][changeColumn - 1] > 0) {
       printf("\nAnd the crowd goes wild ! What a collosal hit ! \n");
-      playTable[changeRow - 1][changeColumn - 1] = -1;
+      if (playTable[changeRow - 1][changeColumn - 1] == 3){
+        numOfThrees-= 1;
+        playTable[changeRow - 1][changeColumn - 1] = -3;
+        if( numOfThrees == 0){
+          //printf("\nThe size 3 boat has been sunk !! + 1 point for Player %d !\n", turnCounter);
+          ++playerScores[turnCounter];
+          for ( int changeLetterX = 0; changeLetterX < xFinal; changeLetterX++) {
+            for (int changeLetterY = 0; changeLetterY < yFinal; changeLetterY++) {
+              if (playTable[changeLetterX][changeLetterY] == -3) {
+                playTable[changeLetterX][changeLetterY] = -53;
+              }
+            }
+          }
+        }
+      }
+      if (playTable[changeRow - 1][changeColumn - 1] == 2){
+        numOfTwos-= 1;
+        playTable[changeRow - 1][changeColumn - 1] = -2;
+        if( numOfTwos == 0){
+          //printf("\nThe size 2 boat has been sunk !! + 1 point for Player %d !\n", turnCounter);
+          ++playerScores[turnCounter];
+          for ( int changeLetterX = 0; changeLetterX < xFinal; changeLetterX++) {
+            for (int changeLetterY = 0; changeLetterY < yFinal; changeLetterY++) {
+              if (playTable[changeLetterX][changeLetterY] == -2) {
+                playTable[changeLetterX][changeLetterY] = -52;
+              }
+            }
+          }
+        }
+      }
+      if (playTable[changeRow - 1][changeColumn - 1] == 1){
+        playTable[changeRow - 1][changeColumn - 1] = -51;
+          //printf("\nThe size 2 boat has been sunk !! + 1 point for Player %d !\n", turnCounter);
+          ++playerScores[turnCounter];
+      }
       numOfShips--;
       ++playerScores[turnCounter];
     }
@@ -229,6 +264,7 @@ int main(int argc, char **argv) {
     } else {
       turnCounter = 1;
     }
+    //printf("\nnumOfTwos = %d, numOfThrees = %d\n",numOfTwos, numOfThrees);
     printf("\n It is now player %d's turn \n", turnCounter);
     for (int i = 0; i < numPlayers; i++) {
       printf("Player %d : %d ", i+1, playerScores[i+1]);
