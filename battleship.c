@@ -7,11 +7,8 @@ int main(int argc, char **argv) {
 
   int x, xFinal;
   int y, yFinal;
-  int shipPiece = 1;
   int changeRow, changeColumn;
-  int continuePlaying;
   int numOfShips = 0;
-  int boatSizeCheck;
   int threeBoatCheck = 0;
   int twoBoatCheck = 0;
   int oneBoatCheck = 0;
@@ -19,22 +16,34 @@ int main(int argc, char **argv) {
   int numPlayers = 3;
   int turnCounter = 1;
   int playerScores[10];
+  int numOfTwos = 0;
+  int firstTwoRow;
+  int firstTwoCol;
+  int numOfThrees = 0;
+  int firstThreeRow;
+  int firstThreeCol;
+  int secondThreeRow;
+  int secondThreeCol;
+  char threeRowD;
   memset(playerScores, 0, 10);
 
 
-  printf("\nPlease enter how many rows you want\n");
-  scanf("%d", &xFinal);
-  while (xFinal > 100) {
-    printf("\nPlease enter a number less than 100\n");
-    scanf("%d", &xFinal);
-  }
+  // printf("\nPlease enter how many rows you want\n");
+  // scanf("%d", &xFinal);
+  // while (xFinal > 100) {
+  //   printf("\nPlease enter a number less than 100\n");
+  //   scanf("%d", &xFinal);
+  // }
+  //
+  // printf("\nPlease enter how many columns you want\n");
+  // scanf("%d", &yFinal);
+  // while (yFinal > 100) {
+  //   printf("\nPlease enter a number less than 100\n");
+  //   scanf("%d", &yFinal);
+  // }
 
-  printf("\nPlease enter how many columns you want\n");
-  scanf("%d", &yFinal);
-  while (yFinal > 100) {
-    printf("\nPlease enter a number less than 100\n");
-    scanf("%d", &yFinal);
-  }
+  xFinal = 10;
+  yFinal = 10;
 
   x = xFinal;
   y = yFinal;
@@ -85,7 +94,9 @@ int main(int argc, char **argv) {
         showShipsTable (xFinal, yFinal, playTable);
         scanf("%d %d", &changeRow, &changeColumn);
         while (changeRow > xFinal || changeColumn > yFinal || changeRow < 1 || changeColumn < 1){
+          system("clear");
           printf("\nInvalid entry, try again \n");
+          showShipsTable (xFinal, yFinal, playTable);
           scanf("%d %d", &changeRow, &changeColumn);
         }
         while (playTable[changeRow - 1][changeColumn - 1] != 0) {
@@ -94,7 +105,19 @@ int main(int argc, char **argv) {
           showShipsTable (xFinal, yFinal, playTable);
           scanf("%d %d", &changeRow, &changeColumn);
         }
+        if (numOfTwos != 0){
+          while (((changeRow != firstTwoRow + 1) && (changeRow != firstTwoRow - 1) && (changeColumn != firstTwoCol + 1) && (changeColumn != firstTwoCol - 1)) || (changeColumn != firstTwoCol && changeRow != firstTwoRow)) {
+            system("clear");
+            printf("\n This piece must be next to the last placed piece\n");
+            printf("\n%d and the 2 is %d\n", firstTwoRow, firstTwoCol);
+            showShipsTable (xFinal, yFinal, playTable);
+            scanf("%d %d", &changeRow, &changeColumn);
+          }
+        }
         playTable[changeRow - 1][changeColumn - 1] = 2;
+        firstTwoRow = changeRow;
+        firstTwoCol = changeColumn;
+        numOfTwos++;
         showShipsTable (xFinal, yFinal, playTable);
       }
       twoBoatCheck = 1;
@@ -116,7 +139,50 @@ int main(int argc, char **argv) {
           showShipsTable (xFinal, yFinal, playTable);
           scanf("%d %d", &changeRow, &changeColumn);
         }
+        if (numOfThrees == 1){
+          while ((changeRow != firstThreeRow + 1) && (changeRow != firstThreeRow - 1) && (changeColumn != firstThreeCol + 1) && (changeColumn != firstThreeCol - 1) || (changeColumn != firstThreeCol && changeRow != firstThreeRow)) {
+            system("clear");
+            printf("\n This piece must be next to the last placed piece\n");
+            printf("\n%d and the 2 is %d\n", firstThreeRow, firstThreeCol);
+            showShipsTable (xFinal, yFinal, playTable);
+            scanf("%d %d", &changeRow, &changeColumn);
+          }
+        }
+        if (numOfThrees == 2){
+          if (threeRowD == 'h'){
+            while (((changeColumn != secondThreeCol + 1 && changeColumn != secondThreeCol - 1) && (changeColumn != firstThreeCol - 1 && changeColumn != firstThreeCol + 1)) || (changeRow != firstThreeRow) || (changeColumn == firstThreeCol || changeColumn == secondThreeCol)) {
+              system("clear");
+              printf("\n This piece must be next to the last placed piece\n");
+              printf("\n%d and the 2 is %d and the direction is %c\n", firstThreeCol, secondThreeCol, threeRowD);
+              showShipsTable (xFinal, yFinal, playTable);
+              scanf("%d %d", &changeRow, &changeColumn);
+            }
+          }
+          if (threeRowD == 'v'){
+            while (((changeRow != secondThreeRow + 1 && changeRow != secondThreeRow - 1) && (changeRow != firstThreeRow + 1 && changeRow != firstThreeRow - 1)) || (changeColumn != firstThreeCol) || (changeRow == firstThreeRow || changeRow == secondThreeRow )) {
+              system("clear");
+              printf("\n This piece must be next to the last placed piece\n");
+              printf("\n%d and the 2 is %d and the direction is %c \n", firstThreeRow, secondThreeRow, threeRowD);
+              showShipsTable (xFinal, yFinal, playTable);
+              scanf("%d %d", &changeRow, &changeColumn);
+            }
+          }
+        }
         playTable[changeRow - 1][changeColumn - 1] = 3;
+        if (numOfThrees == 0){
+          firstThreeRow = changeRow;
+          firstThreeCol = changeColumn;
+        }
+        if (numOfThrees == 1){
+          secondThreeRow = changeRow;
+          secondThreeCol = changeColumn;
+          if (secondThreeRow == firstThreeRow){
+            threeRowD = 'h';
+          }else{
+            threeRowD = 'v';
+          }
+        }
+        numOfThrees++;
         showShipsTable (xFinal, yFinal, playTable);
       }
       threeBoatCheck = 1;
@@ -128,7 +194,7 @@ int main(int argc, char **argv) {
 
   printf("\nNow you will shoot ships, there will be 3 players\n");
   for (int i = 0; i < numPlayers; i++) {
-  printf("Player %d : %d ", i+1, playerScores[i+1]);
+    printf("Player %d : %d ", i+1, playerScores[i+1]);
   }
   printf("\n It is now player %d's turn \n", turnCounter);
   //showArray(xFinal, yFinal, playTable);
@@ -165,7 +231,7 @@ int main(int argc, char **argv) {
     }
     printf("\n It is now player %d's turn \n", turnCounter);
     for (int i = 0; i < numPlayers; i++) {
-    printf("Player %d : %d ", i+1, playerScores[i+1]);
+      printf("Player %d : %d ", i+1, playerScores[i+1]);
     }
     printf("\n");
     // printf("Players 2 : %d", playerScores[2]);  Player 3 : %d \n", playerScores[3]);
@@ -182,9 +248,9 @@ int main(int argc, char **argv) {
 
   printf("\nAll ships are dead, congratulations murderers\n");
 
-  // printf("\n FINAL SCORE \n Player 1 : %d  Players 2 : %d  Player 3 : %d \n", playerScores[1], playerScores[2], playerScores[3]);
+  printf("\n FINAL SCORE \n");
   for (int i = 0; i < numPlayers; i++) {
-  printf("Player %d : %d ", i+1, playerScores[i+1]);
+    printf("Player %d : %d ", i+1, playerScores[i+1]);
   }
   printf("\n");
 
