@@ -96,13 +96,13 @@ void showBlankTable(int x,int y) {
   }
 }
 
-void fireAtShips(int row, int column) {
+// void fireAtShips(int row, int column) {
+//
+// }
 
-}
-
-int place3Boat(int threeBoat) {
-
-}
+// int place3Boat(int threeBoat) {
+//
+// }
 
 // int place3Boat(intx, int y, int changeRow, int changeColumn, int playTable){
 //

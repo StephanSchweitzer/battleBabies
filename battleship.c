@@ -16,17 +16,24 @@ int main(int argc, char **argv) {
   int twoBoatCheck = 0;
   int oneBoatCheck = 0;
   int chooseBoatSize;
+  int numPlayers = 3;
+  int turnCounter = 1;
+  int playerScores[10];
+  memset(playerScores, 0, 10);
+
 
   printf("\nPlease enter how many rows you want\n");
   scanf("%d", &xFinal);
-  while (x > 100) {
+  while (xFinal > 100) {
     printf("\nPlease enter a number less than 100\n");
+    scanf("%d", &xFinal);
   }
 
   printf("\nPlease enter how many columns you want\n");
   scanf("%d", &yFinal);
-  while (y > 100) {
+  while (yFinal > 100) {
     printf("\nPlease enter a number less than 100\n");
+    scanf("%d", &yFinal);
   }
 
   x = xFinal;
@@ -36,14 +43,9 @@ int main(int argc, char **argv) {
   memset(playTable, 0, sizeof(playTable[0][0]) * (x + 1) * y);
 
   system("clear");
-
-  //printf("\nPlease enter the squares (seperated by a space) you want to place your ship,\n then type 99 99 when done\n");
   printf("\n Please enter the size of the ship \n");
-
-
-
-
   showShipsTable (xFinal, yFinal, playTable);
+
   do {
     system("clear");
     printf("\n Please enter the size of the ship \n");
@@ -122,55 +124,69 @@ int main(int argc, char **argv) {
     }
   } while(threeBoatCheck == 0 || twoBoatCheck == 0 || oneBoatCheck == 0);
 
-  // do {
-    system("clear");
-  //   printf("\nOK, assigning a piece to row %d and to column %d\n", changeRow, changeColumn);
-  //
-  //   //place3Boat(xFinal, yFinal, changeRow, changeColumn, playTable);
-  //   // playTable[changeRow - 1][changeColumn - 1] = 1;
-  //   showShipsTable (xFinal, yFinal, playTable);
-  //   scanf("%d %d", &changeRow, &changeColumn);
-  //   while ((changeRow > xFinal || changeColumn > yFinal || changeRow < 1 || changeColumn < 1) && changeRow != 99) {
-  //     printf("\nInvalid entry, try again \n");
-  //     scanf("%d %d", &changeRow, &changeColumn);
-  //   }
-  //   if (changeRow == 99 && changeColumn == 99) {
-  //     printf("\nAre you sure you're done ? Type 99 99 again to confirm and continue\n");
-  //     scanf("%d %d", &changeRow, &changeColumn);
-  //   }
-  //   numOfShips++;
-  //   system("clear");
-  // } while (changeRow != 99 && changeColumn != 99);
+  system("clear");
 
-  //showArray (xFinal, yFinal, playTable);
-  //showBlankTable (xFinal, yFinal);
-  //
-  // system("clear");
   printf("\nNow you will shoot ships, there will be 3 players\n");
+  for (int i = 0; i < numPlayers; i++) {
+  printf("Player %d : %d ", i+1, playerScores[i+1]);
+  }
+  printf("\n It is now player %d's turn \n", turnCounter);
+  //showArray(xFinal, yFinal, playTable);
   showBlankTable (xFinal, yFinal);
   scanf("%d %d", &changeRow, &changeColumn);
+  while (changeRow > xFinal || changeColumn > yFinal || changeRow < 1 || changeColumn < 1){
+    printf("\nInvalid entry, try again \n");
+    scanf("%d %d", &changeRow, &changeColumn);
+  }
 
   do {
+
     system("clear");
+    // printf("\n This is the turn %d you are modifying it \n", turnCounter);
+    // printf("\n Player 1 : %d  Players 2 : %d  Player 3 : %d \n", playerScores[1], playerScores[2], playerScores[3]);
     if (playTable[changeRow - 1][changeColumn - 1] == 0)
     printf("\nYou couldn't hit the broad side of a moisture evaporator\n");
-    if (playTable[changeRow - 1][changeColumn - 1] == -1)
-    printf("\nThis was already shot, you lost your turn\n");
+    if (playTable[changeRow - 1][changeColumn - 1] == -1){
+      printf("\nThis was already shot, you lost your turn\n");
+    }
     if (playTable[changeRow - 1][changeColumn - 1] > 0){
-      printf("\nAnd the crowd goes wild ! What a collosal hit !\n %d \n", numOfShips);
+      printf("\nAnd the crowd goes wild ! What a collosal hit ! \n");
       playTable[changeRow - 1][changeColumn - 1] = -1;
       numOfShips--;
+      ++playerScores[turnCounter];
     }
     if (numOfShips == 0)
     break;
-
+    system("clear");
+    if (turnCounter < numPlayers) {
+      turnCounter++;
+    } else {
+      turnCounter = 1;
+    }
+    printf("\n It is now player %d's turn \n", turnCounter);
+    for (int i = 0; i < numPlayers; i++) {
+    printf("Player %d : %d ", i+1, playerScores[i+1]);
+    }
+    printf("\n");
+    // printf("Players 2 : %d", playerScores[2]);  Player 3 : %d \n", playerScores[3]);
     showShipsTableOnlyHits (xFinal, yFinal, playTable);
     scanf("%d %d", &changeRow, &changeColumn);
+    while (changeRow > xFinal || changeColumn > yFinal || changeRow < 1 || changeColumn < 1){
+      printf("\nInvalid entry, try again \n");
+      scanf("%d %d", &changeRow, &changeColumn);
+    }
+
     system("clear");
 
   } while(1 > 0);
 
-  printf("\nAll ships are dead, congratulations murderer\n");
+  printf("\nAll ships are dead, congratulations murderers\n");
+
+  // printf("\n FINAL SCORE \n Player 1 : %d  Players 2 : %d  Player 3 : %d \n", playerScores[1], playerScores[2], playerScores[3]);
+  for (int i = 0; i < numPlayers; i++) {
+  printf("Player %d : %d ", i+1, playerScores[i+1]);
+  }
+  printf("\n");
 
 
 
