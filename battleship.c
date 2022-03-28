@@ -28,22 +28,22 @@ int main(int argc, char **argv) {
   memset(playerScores, 0, 10);
 
 
-  // printf("\nPlease enter how many rows you want\n");
-  // scanf("%d", &xFinal);
-  // while (xFinal > 100) {
-  //   printf("\nPlease enter a number less than 100\n");
-  //   scanf("%d", &xFinal);
-  // }
-  //
-  // printf("\nPlease enter how many columns you want\n");
-  // scanf("%d", &yFinal);
-  // while (yFinal > 100) {
-  //   printf("\nPlease enter a number less than 100\n");
-  //   scanf("%d", &yFinal);
-  // }
+  printf("\nPlease enter how many rows you want\n");
+  scanf("%d", &xFinal);
+  while (xFinal > 100) {
+    printf("\nPlease enter a number less than 100\n");
+    scanf("%d", &xFinal);
+  }
 
-  xFinal = 10;
-  yFinal = 10;
+  printf("\nPlease enter how many columns you want\n");
+  scanf("%d", &yFinal);
+  while (yFinal > 100) {
+    printf("\nPlease enter a number less than 100\n");
+    scanf("%d", &yFinal);
+  }
+
+  // xFinal = 10;
+  // yFinal = 10;
 
   x = xFinal;
   y = yFinal;
